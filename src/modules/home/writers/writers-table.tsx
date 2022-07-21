@@ -11,9 +11,12 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import { memo, useMemo } from 'react';
+import { forwardRef, memo, useMemo } from 'react';
+import { TableVirtuoso } from 'react-virtuoso';
 
 import { useGetWriters } from 'contexts/global-state';
+
+import { Writer } from '../models';
 
 type Props = {
   chosenNationality: string;
@@ -46,47 +49,56 @@ const BooksTable = ({ chosenNationality, writerForSearching, setWriter }: Props)
     );
   }
 
+  const chooseWriter = ({ id, firstName, lastName, books }: Writer) => {
+    if (!books.length) {
+      return undefined;
+    }
+
+    return setWriter(id, `${firstName} ${lastName}`);
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="writers table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>ID</StyledTableCell>
-            <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell>Nationality</StyledTableCell>
-            <StyledTableCell>Number of books</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {writersToRender.map(({ id, firstName, lastName, nationality, books }) => {
-            const chooseBooks = () => {
-              if (!books.length) {
-                return undefined;
-              }
-
-              return setWriter(id, `${firstName} ${lastName}`);
-            };
-
-            return (
-              <StyledTableRow key={id}>
-                <StyledTableCell component="th" scope="row">
-                  {id}
-                </StyledTableCell>
-                <StyledTableCell>
-                  {firstName} {lastName}
-                </StyledTableCell>
-                <StyledTableCell>{nationality}</StyledTableCell>
-                <StyledTableCell>
-                  <Button size="small" variant="outlined" onClick={chooseBooks}>
-                    {books.length || 'No books'}
-                  </Button>
-                </StyledTableCell>
-              </StyledTableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <TableVirtuoso
+      style={{ height: 600 }}
+      data={writersToRender}
+      components={{
+        Scroller: forwardRef((props, ref) => (
+          <TableContainer component={Paper} {...props} ref={ref} />
+        )),
+        Table: (props) => <Table {...props} style={{ borderCollapse: 'separate' }} />,
+        TableHead,
+        TableRow: StyledTableRow,
+        TableBody: forwardRef((props, ref) => <TableBody {...props} ref={ref} />),
+      }}
+      fixedHeaderContent={() => (
+        <TableRow>
+          <StyledTableCell>ID</StyledTableCell>
+          <StyledTableCell>Name</StyledTableCell>
+          <StyledTableCell>Nationality</StyledTableCell>
+          <StyledTableCell>Number of books</StyledTableCell>
+        </TableRow>
+      )}
+      itemContent={(_, { id, firstName, lastName, nationality, books }) => (
+        <>
+          <StyledTableCell component="th" scope="row">
+            {id}
+          </StyledTableCell>
+          <StyledTableCell>
+            {firstName} {lastName}
+          </StyledTableCell>
+          <StyledTableCell>{nationality}</StyledTableCell>
+          <StyledTableCell>
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={() => chooseWriter({ id, firstName, lastName, nationality, books })}
+            >
+              {books.length || 'No books'}
+            </Button>
+          </StyledTableCell>
+        </>
+      )}
+    />
   );
 };
 

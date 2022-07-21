@@ -32,6 +32,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/function-component-definition': 'off',
+    'react/no-unstable-nested-components': ['off', { allowAsProps: true }],
     'no-restricted-exports': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-unused-vars': 'off',
@@ -40,7 +41,7 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     '@typescript-eslint/no-use-before-define': 'off',
-    camelcase: 'off',
+    'camelcase': 'off',
     'react/jsx-filename-extension': [
       2,
       {

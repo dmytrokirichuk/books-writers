@@ -10,7 +10,8 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import { memo, useMemo } from 'react';
+import { forwardRef, memo, useMemo } from 'react';
+import { TableVirtuoso } from 'react-virtuoso';
 
 import { useGetBooks, useGetWriters } from 'contexts/global-state';
 
@@ -55,32 +56,39 @@ const BooksTable = ({ chosenWriterId, chosenNationality, bookForSearching }: Pro
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="books table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>ID</StyledTableCell>
-            <StyledTableCell>Title</StyledTableCell>
-            <StyledTableCell>Author</StyledTableCell>
-            <StyledTableCell>Year of publication</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {booksToRender.map(({ id, title, authorId, year }) => (
-            <StyledTableRow key={id}>
-              <StyledTableCell component="th" scope="row">
-                {id}
-              </StyledTableCell>
-              <StyledTableCell>{title}</StyledTableCell>
-              <StyledTableCell>
-                {writers[authorId].firstName} {writers[authorId].lastName}
-              </StyledTableCell>
-              <StyledTableCell>{year}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <TableVirtuoso
+      style={{ height: 600 }}
+      data={booksToRender}
+      components={{
+        Scroller: forwardRef((props, ref) => (
+          <TableContainer component={Paper} {...props} ref={ref} />
+        )),
+        Table: (props) => <Table {...props} style={{ borderCollapse: 'separate' }} />,
+        TableHead,
+        TableRow: StyledTableRow,
+        TableBody: forwardRef((props, ref) => <TableBody {...props} ref={ref} />),
+      }}
+      fixedHeaderContent={() => (
+        <StyledTableRow>
+          <StyledTableCell>ID</StyledTableCell>
+          <StyledTableCell>Title</StyledTableCell>
+          <StyledTableCell>Author</StyledTableCell>
+          <StyledTableCell>Year of publication</StyledTableCell>
+        </StyledTableRow>
+      )}
+      itemContent={(_, { id, authorId, title, year }) => (
+        <>
+          <StyledTableCell component="th" scope="row">
+            {id}
+          </StyledTableCell>
+          <StyledTableCell>{title}</StyledTableCell>
+          <StyledTableCell>
+            {writers[authorId].firstName} {writers[authorId].lastName}
+          </StyledTableCell>
+          <StyledTableCell>{year}</StyledTableCell>
+        </>
+      )}
+    />
   );
 };
 
