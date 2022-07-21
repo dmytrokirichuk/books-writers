@@ -11,16 +11,24 @@
 * Typescript, 
 * Material UI
 * Axios
+* React Virtuoso
 * Tools: Eslint, Prettier, husky (pre-commit hook)
 
 ## Architecture
-* components - collection of basic UI components
-* contexts - folder with contexts
-* modules - organisms of the pages
-* pages - pages of the project
-* services - designed for api management
-* theme - material UI theme
+* `components` - collection of basic UI components, which can be used across different modules
+* `contexts` - folder with contexts
+* `modules` - organisms of the pages
+* `pages` - pages of the project, contains only UI component for a page. All the logic and children is stored in corresponding module
+* `services` - services for API and 3rd party services integration
+* `theme` - material UI theme
 
 ## Package.json scripts
-* yarn lint - checks for eslint and prettier errors
-* yarn start - run the project in dev mode
+* `yarn prettier` - automaticaly fixes code style according prettier rules
+* `yarn lint` - checks for eslint, prettier and TS errors
+* `yarn lint:js` - runs eslint check
+* `yarn lint:types` - runs types check
+* `yarn start` - run the project in dev mode
+
+## Description
+The tables are implementing taking into account the possible big ammount of data they can render. To prevent app freezing because of the rendering of a lot of components I used React Virtuoso to prevent possible performance issue here.
+Material UI library was used to make the development quicker.
