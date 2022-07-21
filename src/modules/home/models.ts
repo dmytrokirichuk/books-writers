@@ -30,3 +30,6 @@ export type WriterDTO = {
   last_name: string;
   nationality: string;
 };
+
+export const ID_COL_WIDTH_PERCENT = 10;
+export const MAIN_COL_WIDTH_PERCENT = 40;

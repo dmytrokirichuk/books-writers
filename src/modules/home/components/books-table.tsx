@@ -1,19 +1,13 @@
-import {
-  Typography,
-  Table,
-  Paper,
-  TableRow,
-  TableHead,
-  TableContainer,
-  TableCell,
-  TableBody,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { tableCellClasses } from '@mui/material/TableCell';
+import { Typography, Table, Paper, TableHead, TableContainer, TableBody } from '@mui/material';
 import { forwardRef, memo, useMemo } from 'react';
 import { TableVirtuoso } from 'react-virtuoso';
 
 import { useGetBooks, useGetWriters } from 'contexts/global-state';
+
+import { ID_COL_WIDTH_PERCENT, MAIN_COL_WIDTH_PERCENT } from '../models';
+
+import StyledTableCell from './styled-table-cell';
+import StyledTableRow from './styled-table-row';
 
 type Props = {
   chosenNationality: string;
@@ -70,8 +64,8 @@ const BooksTable = ({ chosenWriterId, chosenNationality, bookForSearching }: Pro
       }}
       fixedHeaderContent={() => (
         <StyledTableRow>
-          <StyledTableCell>ID</StyledTableCell>
-          <StyledTableCell>Title</StyledTableCell>
+          <StyledTableCell width={`${ID_COL_WIDTH_PERCENT}%`}>ID</StyledTableCell>
+          <StyledTableCell width={`${MAIN_COL_WIDTH_PERCENT}%`}>Title</StyledTableCell>
           <StyledTableCell>Author</StyledTableCell>
           <StyledTableCell>Year of publication</StyledTableCell>
         </StyledTableRow>
@@ -81,7 +75,7 @@ const BooksTable = ({ chosenWriterId, chosenNationality, bookForSearching }: Pro
           <StyledTableCell component="th" scope="row">
             {id}
           </StyledTableCell>
-          <StyledTableCell>{title}</StyledTableCell>
+          <StyledTableCell width="50%">{title}</StyledTableCell>
           <StyledTableCell>
             {writers[authorId].firstName} {writers[authorId].lastName}
           </StyledTableCell>
@@ -91,24 +85,5 @@ const BooksTable = ({ chosenWriterId, chosenNationality, bookForSearching }: Pro
     />
   );
 };
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(even)': {
-    backgroundColor: theme.palette.primary.light,
-  },
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 
 export default memo(BooksTable);

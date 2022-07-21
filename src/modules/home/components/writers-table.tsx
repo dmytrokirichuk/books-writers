@@ -7,16 +7,16 @@ import {
   TableBody,
   Table,
   Paper,
-  TableCell,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { tableCellClasses } from '@mui/material/TableCell';
 import { forwardRef, memo, useMemo } from 'react';
 import { TableVirtuoso } from 'react-virtuoso';
 
 import { useGetWriters } from 'contexts/global-state';
 
 import { Writer } from '../models';
+
+import StyledTableCell from './styled-table-cell';
+import StyledTableRow from './styled-table-row';
 
 type Props = {
   chosenNationality: string;
@@ -90,7 +90,7 @@ const BooksTable = ({ chosenNationality, writerForSearching, setWriter }: Props)
           <StyledTableCell>
             <Button
               size="small"
-              variant="outlined"
+              variant="text"
               onClick={() => chooseWriter({ id, firstName, lastName, nationality, books })}
             >
               {books.length || 'No books'}
@@ -101,24 +101,5 @@ const BooksTable = ({ chosenNationality, writerForSearching, setWriter }: Props)
     />
   );
 };
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(even)': {
-    backgroundColor: theme.palette.primary.light,
-  },
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 
 export default memo(BooksTable);
