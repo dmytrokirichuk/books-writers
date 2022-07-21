@@ -39,14 +39,14 @@ const Home = () => {
 
   return (
     <Grid container spacing={2} p={2}>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={12} md={6}>
         <WritersSection
           chosenNationality={chosenNationality}
           setChosenNationality={setChosenNationality}
           chooseWriter={setChosenWriterId}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={12} md={6}>
         <BooksSection
           chosenNationality={chosenNationality}
           setChosenNationality={setChosenNationality}
