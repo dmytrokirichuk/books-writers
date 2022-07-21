@@ -35,9 +35,11 @@ module.exports = {
     'no-restricted-exports': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-unused-vars': 'off',
+    'no-use-before-define': 'off',
     'react/require-default-props': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-use-before-define': 'off',
     camelcase: 'off',
     'react/jsx-filename-extension': [
       2,

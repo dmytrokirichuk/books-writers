@@ -1,3 +1,4 @@
+import { Grid, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { useSetBooksAndWriters } from 'contexts/global-state';
@@ -17,26 +18,42 @@ const Home = () => {
   }, [setBooksAndWriters]);
 
   if (error) {
-    return <div className="p-6">Sorry, something went wrong</div>;
+    return (
+      <Grid p={2}>
+        <Typography variant="subtitle1" color="primary" component="p">
+          Sorry, something went wrong
+        </Typography>
+      </Grid>
+    );
   }
 
   if (loading) {
-    return <div className="p-6">Loading</div>;
+    return (
+      <Grid p={2}>
+        <Typography variant="subtitle1" color="primary" component="p">
+          Loading
+        </Typography>
+      </Grid>
+    );
   }
 
   return (
-    <div className="grid grid-cols-2 gap-3 p-6">
-      <WritersSection
-        chosenNationality={chosenNationality}
-        setChosenNationality={setChosenNationality}
-        chooseWriter={setChosenWriterId}
-      />
-      <BooksSection
-        chosenNationality={chosenNationality}
-        setChosenNationality={setChosenNationality}
-        chosenWriterId={chosenWriterId}
-      />
-    </div>
+    <Grid container spacing={2} p={2}>
+      <Grid item xs={6}>
+        <WritersSection
+          chosenNationality={chosenNationality}
+          setChosenNationality={setChosenNationality}
+          chooseWriter={setChosenWriterId}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <BooksSection
+          chosenNationality={chosenNationality}
+          setChosenNationality={setChosenNationality}
+          chosenWriterId={chosenWriterId}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

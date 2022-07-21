@@ -8,18 +8,18 @@
 
 ## Tech Stack
 * React
-* Typescript, eslint, prettier, husky (pre-commit hook)
-* TailwindCSS
+* Typescript, 
+* Material UI
 * Axios
-* Downshift
+* Tools: Eslint, Prettier, husky (pre-commit hook)
 
 ## Architecture
-* assets - styles and icons
 * components - collection of basic UI components
 * contexts - folder with contexts
 * modules - organisms of the pages
 * pages - pages of the project
 * services - designed for api management
+* theme - material UI theme
 
 ## Package.json scripts
 * yarn lint - checks for eslint and prettier errors

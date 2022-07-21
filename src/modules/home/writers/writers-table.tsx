@@ -1,6 +1,18 @@
+import {
+  Button,
+  TableRow,
+  Typography,
+  TableHead,
+  TableContainer,
+  TableBody,
+  Table,
+  Paper,
+  TableCell,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
 import { memo, useMemo } from 'react';
 
-import Table from 'components/table';
 import { useGetWriters } from 'contexts/global-state';
 
 type Props = {
@@ -9,7 +21,7 @@ type Props = {
   setWriter: (id: number, name: string) => void;
 };
 
-const WritersTable = ({ chosenNationality, writerForSearching, setWriter }: Props) => {
+const BooksTable = ({ chosenNationality, writerForSearching, setWriter }: Props) => {
   const writers = useGetWriters();
 
   const writersToRender = useMemo(
@@ -27,39 +39,74 @@ const WritersTable = ({ chosenNationality, writerForSearching, setWriter }: Prop
   );
 
   if (writersToRender.length === 0) {
-    return <div>Sorry, no data</div>;
+    return (
+      <Typography variant="subtitle1" color="primary" component="p">
+        Sorry, no data
+      </Typography>
+    );
   }
 
   return (
-    <Table>
-      <Table.THead>
-        <Table.Th>ID</Table.Th>
-        <Table.Th>Name</Table.Th>
-        <Table.Th>Nationality</Table.Th>
-        <Table.Th>Number of books</Table.Th>
-      </Table.THead>
-      <Table.TBody>
-        {writersToRender.map(({ id, firstName, lastName, nationality, books }) => (
-          <Table.TRow key={id}>
-            <Table.Td>{id}</Table.Td>
-            <Table.Td>
-              {firstName} {lastName}
-            </Table.Td>
-            <Table.Td>{nationality}</Table.Td>
-            <Table.Td>
-              <button
-                onClick={() => setWriter(id, `${firstName} ${lastName}`)}
-                type="button"
-                className="p-2 hover:scale-110 hover:text-sky-900 duration-300"
-              >
-                {books.length || 'No books'}
-              </button>
-            </Table.Td>
-          </Table.TRow>
-        ))}
-      </Table.TBody>
-    </Table>
+    <TableContainer component={Paper}>
+      <Table aria-label="writers table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell>Nationality</StyledTableCell>
+            <StyledTableCell>Number of books</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {writersToRender.map(({ id, firstName, lastName, nationality, books }) => {
+            const chooseBooks = () => {
+              if (!books.length) {
+                return undefined;
+              }
+
+              return setWriter(id, `${firstName} ${lastName}`);
+            };
+
+            return (
+              <StyledTableRow key={id}>
+                <StyledTableCell component="th" scope="row">
+                  {id}
+                </StyledTableCell>
+                <StyledTableCell>
+                  {firstName} {lastName}
+                </StyledTableCell>
+                <StyledTableCell>{nationality}</StyledTableCell>
+                <StyledTableCell>
+                  <Button size="small" variant="outlined" onClick={chooseBooks}>
+                    {books.length || 'No books'}
+                  </Button>
+                </StyledTableCell>
+              </StyledTableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
-export default memo(WritersTable);
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(even)': {
+    backgroundColor: theme.palette.primary.light,
+  },
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
+export default memo(BooksTable);

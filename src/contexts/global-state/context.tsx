@@ -1,7 +1,8 @@
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 import { BookDTO, Books, WriterDTO, Writers } from 'modules/home';
-import { normaliseBooksAndWriters } from 'modules/home/utils';
+
+import { normaliseBooksAndWriters } from './utils';
 
 type ContextType = {
   books: Books;

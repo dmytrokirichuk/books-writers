@@ -1,6 +1,17 @@
+import {
+  Typography,
+  Table,
+  Paper,
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
 import { memo, useMemo } from 'react';
 
-import Table from 'components/table';
 import { useGetBooks, useGetWriters } from 'contexts/global-state';
 
 type Props = {
@@ -36,31 +47,60 @@ const BooksTable = ({ chosenWriterId, chosenNationality, bookForSearching }: Pro
   );
 
   if (booksToRender.length === 0) {
-    return <div>Sorry, no data</div>;
+    return (
+      <Typography variant="subtitle1" color="primary" component="p">
+        Sorry, no data
+      </Typography>
+    );
   }
 
   return (
-    <Table>
-      <Table.THead>
-        <Table.Th>ID</Table.Th>
-        <Table.Th>Title</Table.Th>
-        <Table.Th>Author</Table.Th>
-        <Table.Th>Year of publication</Table.Th>
-      </Table.THead>
-      <Table.TBody>
-        {booksToRender.map(({ id, title, authorId, year }) => (
-          <Table.TRow key={id}>
-            <Table.Td>{id}</Table.Td>
-            <Table.Td>{title}</Table.Td>
-            <Table.Td>
-              {writers[authorId].firstName} {writers[authorId].lastName}
-            </Table.Td>
-            <Table.Td>{year}</Table.Td>
-          </Table.TRow>
-        ))}
-      </Table.TBody>
-    </Table>
+    <TableContainer component={Paper}>
+      <Table aria-label="books table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell>Title</StyledTableCell>
+            <StyledTableCell>Author</StyledTableCell>
+            <StyledTableCell>Year of publication</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {booksToRender.map(({ id, title, authorId, year }) => (
+            <StyledTableRow key={id}>
+              <StyledTableCell component="th" scope="row">
+                {id}
+              </StyledTableCell>
+              <StyledTableCell>{title}</StyledTableCell>
+              <StyledTableCell>
+                {writers[authorId].firstName} {writers[authorId].lastName}
+              </StyledTableCell>
+              <StyledTableCell>{year}</StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(even)': {
+    backgroundColor: theme.palette.primary.light,
+  },
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 export default memo(BooksTable);

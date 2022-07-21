@@ -1,4 +1,4 @@
-import { BookDTO, Books, WriterDTO, Writers } from './models';
+import { BookDTO, Books, WriterDTO, Writers } from '../../modules/home/models';
 
 export const normaliseBooksAndWriters = (booksDTO: BookDTO[], writersDTO: WriterDTO[]) => {
   const writersNationalities: string[] = [];
