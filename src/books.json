@@ -1,0 +1,68 @@
+[
+    {
+        "id": 23465,
+        "author_id": 1,
+        "title": "Ender's Game",
+        "year": 1985
+    },
+    {
+        "id": 4567,
+        "author_id": 1,
+        "title": "Speaker for the Dead",
+        "year": 1986
+    },
+    {
+        "id": 5678,
+        "author_id": 1,
+        "title": "Xenocide",
+        "year": 1991
+    },
+    {
+        "id": 2175,
+        "author_id": 1,
+        "title": "Children of the Mind",
+        "year": 1996
+    },
+    {
+        "id": 17894,
+        "author_id": 1,
+        "title": "A War of Gifts: An Ender Story",
+        "year": 2007
+    },
+    {
+        "id": 753,
+        "author_id": 1,
+        "title": "Ender in Exile",
+        "year": 2008
+    },
+    {
+        "id": 11234,
+        "author_id": 2,
+        "title": "2001: A Space Odyssey", 
+        "year": 1968
+    },
+    {
+        "id": 1153,
+        "author_id": 2,
+        "title": "2010: Odyssey Two", 
+        "year": 1982
+    },
+    {
+        "id": 1623,
+        "author_id": 2,
+        "title": "2061: Odyssey Three", 
+        "year": 1987
+    },
+    {
+        "id": 7123,
+        "author_id": 2,
+        "title": "3001: The Final Odyssey", 
+        "year": 1997
+    },
+    {
+        "id": 8232,
+        "author_id": 3,
+        "title" : "The Windup Girl",
+        "year": 2009
+    }
+]

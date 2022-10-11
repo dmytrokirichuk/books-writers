@@ -1,4 +1,5 @@
-import client from 'services';
+import books from '../../books.json';
+import writers from '../../writers.json';
 
 import { BookDTO, WriterDTO } from './models';
 
@@ -13,15 +14,11 @@ export const getBooksAndWriters = (
     writersDTO: WriterDTO[];
   }) => void,
 ) => {
-  const getBooks = client.get('/books.json');
-  const getWriters = client.get('/writers.json');
-
+  // simulation of receiving data from the server
   // getting all the data at once, because the books depend on the writers
-  Promise.all([getBooks, getWriters])
-    .then((values) => {
-      const [booksData, writersData] = values;
-
-      setBooksAndWriters({ booksDTO: booksData.data, writersDTO: writersData.data });
+  Promise.all([writers, books])
+    .then(() => {
+      setBooksAndWriters({ booksDTO: books, writersDTO: writers });
     })
     .catch(() => setError(true))
     .finally(() => setLoading(false));

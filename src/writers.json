@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "first_name": "Orson Scott",
+    "last_name": "Card",
+    "nationality": "American"
+  },
+  {
+    "id": 2,
+    "first_name": "Arthur C.",
+    "last_name": "Clarke",
+    "nationality": "British"
+  },
+  {
+    "id": 3,
+    "first_name": "Paolo",
+    "last_name": "Bacigalupi",
+    "nationality": "American"
+  }
+]
