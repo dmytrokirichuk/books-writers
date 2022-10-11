@@ -32,3 +32,6 @@
 ## Description
 The tables are implementing taking into account the possible big ammount of data they can render. To prevent app freezing because of the rendering of a lot of components I used React Virtuoso to prevent possible performance issue here.
 Material UI library was used to make the development quicker.
+
+## Screencast
+![screencast](https://user-images.githubusercontent.com/105731228/195113444-284df3b8-08d0-44c0-b356-44e841bb1d00.gif)
